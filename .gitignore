@@ -1,0 +1,31 @@
+# Rust
+target/
+Cargo.lock
+
+# Stellar CLI
+.soroban/
+.stellar/
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Build output
+dist/
+frontend/dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

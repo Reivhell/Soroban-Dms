@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dead-50: #f0f0ff;
+  --color-dead-100: #e0e0ff;
+  --color-dead-200: #bfbfff;
+  --color-dead-300: #9f9fff;
+  --color-dead-400: #7f7fff;
+  --color-dead-500: #6b6bff;
+  --color-dead-600: #5a5ae6;
+  --color-dead-700: #4848cc;
+  --color-dead-800: #3636b3;
+  --color-dead-900: #242499;
+}
