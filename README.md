@@ -2,6 +2,8 @@
 
 A trustless, decentralized digital inheritance vault built on the Stellar network using Soroban Smart Contracts (Rust) and a modern React + TypeScript + Tailwind CSS frontend.
 
+![Preview](Preview.png)
+
 ## Overview
 
 The **Soroban Dead Man's Switch** provides a secure way to manage digital asset inheritance without relying on centralized third parties, lawyers, or notaries.
@@ -27,7 +29,17 @@ The **Soroban Dead Man's Switch** provides a secure way to manage digital asset 
 
 ---
 
-## Contract Interface
+## Smart Contract
+
+![Smart Contract](smartcontract.png)
+
+### Deployed Contract
+
+| Network       | Contract ID                                                                 |
+|---------------|-----------------------------------------------------------------------------|
+| Mainnet       | `CCK3W5FW2MY7IX7PZ65O7R6WYFLXRKDKT5MCIHVAHPIPRHZ223BPTU4N` |
+
+### Interface
 
 | Function                | Arguments                                                      | Returns  |
 | ----------------------- | -------------------------------------------------------------- | -------- |
@@ -39,11 +51,7 @@ The **Soroban Dead Man's Switch** provides a secure way to manage digital asset 
 | `get_contract_balance`  | —                                                              | `i128`   |
 | `get_switch_status`     | —                                                              | `u64`    |
 
----
-
-## Smart Contract Storage Architecture
-
-State data is handled within Soroban's instance storage using a scoped data key enumeration:
+### Storage Architecture
 
 ```rust
 #[contracttype]
@@ -71,23 +79,25 @@ pub enum DataKey {
 
 ```
 soroban-dms/
-├── Cargo.toml              # Workspace (soroban-sdk = "26")
+├── Cargo.toml                # Workspace (soroban-sdk = "26")
 ├── contracts/
-│   ├── hello-world/        # Example contract
-│   └── dead-mans-switch/   # Main contract
+│   └── dead-mans-switch/     # Smart contract
 │       ├── Cargo.toml
 │       └── src/
-│           ├── lib.rs      # Contract logic
-│           └── test.rs     # Test suite (5 tests)
+│           ├── lib.rs        # Contract logic
+│           └── test.rs       # Test suite (5 tests)
 ├── frontend/
 │   ├── src/
-│   │   ├── App.tsx         # Dashboard UI
-│   │   ├── index.css       # Tailwind CSS
+│   │   ├── App.tsx           # Dashboard UI
+│   │   ├── index.css         # Tailwind CSS
 │   │   └── hooks/
-│   │       ├── useWallet.ts   # Freighter connection
-│   │       └── useContract.ts # Contract interaction
+│   │       ├── useWallet.ts     # Freighter connection
+│   │       └── useContract.ts   # Contract interaction
+│   ├── contracts/
+│   │   ├── contract.ts         # Typed contract bindings
+│   │   └── contract.example.ts # Usage example
 │   ├── package.json
-│   └── .env                # VITE_CONTRACT_ID=
+│   └── .env                  # VITE_CONTRACT_ID=
 ```
 
 ### Smart Contract
@@ -100,8 +110,7 @@ cargo test -p dead-mans-switch
 cd frontend
 stellar contract build
 
-# 3. Deploy to network
-#    Testnet (gratis via friendbot):
+# 3. Deploy to testnet (gratis)
 stellar network add testnet \
   --rpc-url https://soroban-testnet.stellar.org \
   --network-passphrase "Test SDF Network ; September 2015"
@@ -110,7 +119,7 @@ stellar keys generate soroban-dms --network testnet
 curl "https://friendbot.stellar.org?addr=$(stellar keys address soroban-dms)"
 stellar contract deploy --source-account soroban-dms --network testnet
 
-#    Mainnet (butuh XLM real):
+# 4. Deploy to mainnet (butuh XLM real)
 stellar network add mainnet \
   --rpc-url https://mainnet.sorobanrpc.com \
   --network-passphrase "Public Global Stellar Network ; September 2015"
@@ -127,7 +136,7 @@ cd frontend
 npm install
 
 # Set contract ID
-echo "VITE_CONTRACT_ID=<CONTRACT_ID_DARI_DEPLOY>" > .env
+echo "VITE_CONTRACT_ID=CCK3W5FW2MY7IX7PZ65O7R6WYFLXRKDKT5MCIHVAHPIPRHZ223BPTU4N" > .env
 
 # Run dev server
 npm run dev
